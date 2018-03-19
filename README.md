@@ -1,4 +1,27 @@
 
+# Getting started
+**1. Download the project.**
+```
+git clone git@github.com:Robox-AI/toxic-comment-classifier.git
+cd toxic-comment-classifier
+```
+**2. To keep dependencies local and easy to remove later, use virtualenv.**
+```
+virtualenv .env
+source .env/bin/activate
+```
+**3. Install this notebook's dependencies.**
+```
+pip install -r requirements.txt
+```
+**4. Open the notebook.**
+```
+jupyter notebook toxic-comments.ipynb
+```
+**5. Run the notebook inside Jupyter.**
+
+# Notebook contents
+
 
 ```python
 # Reload modules before executing user code
@@ -9,7 +32,7 @@
 %matplotlib inline
 ```
 
-# 1. Load training and test data into pandas dataframes
+## Load training and test data into pandas dataframes
 
 
 ```python
@@ -28,7 +51,7 @@ test_df = pd.read_csv(test_csv, na_filter=False)
 submission_df = pd.read_csv(sample_submission_csv, nrows=0) # copy column headers
 ```
 
-# 2. Explore the data
+## Explore the data
 
 The labels are all in the same scale and won't need to be standardized. Notice how a comment can have multiple labels, e.g. the comment below is both toxic and a threat. This looks like a multilabel text classification problem, which can be solved in a variety of ways.
 
@@ -219,7 +242,7 @@ train_df.info() # verify that are no missing values in our dataset
     memory usage: 9.7+ MB
 
 
-# 4. Separate target features (y) from input features (X)
+## Separate target features (y) from input features (X)
 
 
 Use sklearn.model_selection.train_test_split to split training data into validation and train.
@@ -235,7 +258,7 @@ X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, rando
 X_test = test_df['comment_text']
 ```
 
-# 5. Create a TF-IDF matrix
+## Create a TF-IDF matrix
 
 Count how many times each word appears in the comments (term frequency) and multiply it by the context-adjusted weight of each word (inverse document frequency). Better explained here: https://www.quora.com/How-does-TfidfVectorizer-work-in-laymans-terms
 
@@ -396,7 +419,7 @@ dt_matrix.head(1).loc[:, (dt_matrix.head(1) != 0).any(axis=0)]
 
 
 
-# 6. Problem transformation
+## Problem transformation
 
 Train one binary classifier for each label. This is called binary relevance.
 
@@ -443,7 +466,7 @@ for label in y_valid:
     Validation accuracy for threat comments is 0.9972113426288579
 
 
-# 7. View results
+## View results
 
 
 ```python
@@ -526,7 +549,7 @@ print(submission_df.loc[submission_df['id'] == '0016b94c8b20ffa6'])
 
 ^ That looks about right
 
-# 8. Save results to CSV for submission
+## Save results to CSV for submission
 
 
 ```python
