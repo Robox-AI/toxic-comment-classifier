@@ -55,6 +55,6 @@ jupyter notebook toxic-comments.ipynb
 deactivate
 ```
 
-# Notebook contents
+# Jupyter notebook
 
-[toxic-comments.ipynb (markdown)](toxic-comments.md)
+[toxic-comments.ipynb](toxic-comments.ipynb)
